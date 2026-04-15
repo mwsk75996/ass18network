@@ -41,6 +41,23 @@ Part 1 består af konfiguration til to vSRX-routere (R1 og R2) i form af Junos-k
   - `trust → trust` policy `default-permit`
   - Host-inbound tillader `ping`, `ssh` og `dhcp` på LAN-interfaces, og `ping`/`ssh` på transit-interface
 
+### part1_vsrxR1_C8.json
+- Beskrivelse: Konfiguration for vSRX **R1** (host-name: `R1`) – Challenge 8.
+- Interfaces / net:
+  - `ge-0/0/1.0` → `192.168.1.1/24` (Net1)
+  - `ge-0/0/2.0` → `192.168.2.1/24` (Net2)
+- Services:
+  - SSH aktiveret
+  - DHCP lokal server via `dhcp-local-server` (grupper **Net1** og **Net2**)
+  - DHCP pools (via `access address-assignment`):
+    - Net1: `192.168.1.10–192.168.1.100`, router `192.168.1.1`, DNS `8.8.8.8`, max-lease `86400`
+      - Reserveret host: `PC1-Reserved` (MAC `00:0c:29:ca:cc:09` → `192.168.1.50`)
+    - Net2: `192.168.2.10–192.168.2.100`, router `192.168.2.1`, DNS `8.8.8.8`, max-lease `86400`
+      - Reserveret host: `PC2-Reserved` (MAC `00:0c:29:ca:cc:09` → `192.168.2.50`)
+- Security:
+  - `trust → trust` policy `default-permit`
+  - Host-inbound tillader `ping`, `ssh` og `dhcp` på `ge-0/0/1.0` og `ge-0/0/2.0`
+
 ## Part 2 (kommer)
 Der kommer også en Part 2, som består af følgende dele:
 
